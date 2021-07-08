@@ -2,15 +2,14 @@ import axios from "axios"
 
 export type BusStop = {
     commonName: string;
-    lineGroup: {
-        naptanIdReference: string;
-    }[];
+    naptanId: string;
+    stopLetter: string;
     distance: number;
 }
 
 export async function getNearbyStops (lat: number,long: number) {
     const data = await axios.get<{stopPoints: BusStop[]}>(
-        `https://api.tfl.gov.uk/StopPoint?stopTypes=NaptanOnstreetBusCoachStopPair,NaptanOnstreetBusCoachStopCluster,NaptanBusCoachStation&radius=400&lat=${lat}&lon=${long}`
+        `https://api.tfl.gov.uk/StopPoint?stopTypes=NaptanPublicBusCoachTram&radius=400&lat=${lat}&lon=${long}`
     )
     const busStops: BusStop[] = data.data.stopPoints;
     return busStops;

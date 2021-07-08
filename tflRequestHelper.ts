@@ -8,18 +8,3 @@ export async function requestBusArrivals(busCode: string) : Promise<TfLBusArriva
     const first5Buses: TfLBusArrival[] = sortBusArrivals(busData);
     return first5Buses;
 }
-
-// export async function getArrivals(stopId: string) {
-//     const response = await axios.get<TfLBusArrival[]>(`${baseUrl}${stopId}${arrivalString}`)
-//     return response.data;
-// }
-
-// async function start() {
-    
-//     const arrivals = await getArrivals('490008660N');
-    
-//     // const firstFiveArrivals = getfirstfive~Arrvals(arrivals)
-//     // printArrivalsNicely(firstFivArrivals)
-// }
-// start();
-
