@@ -8,16 +8,12 @@ export type BusStop = {
     distance: number;
 }
 
-export function getNearbyStops (lat: number,long: number) {
-    return axios.get(
+export async function getNearbyStops (lat: number,long: number) {
+    const data = await axios.get<{stopPoints: BusStop[]}>(
         `https://api.tfl.gov.uk/StopPoint?stopTypes=NaptanOnstreetBusCoachStopPair,NaptanOnstreetBusCoachStopCluster,NaptanBusCoachStation&radius=400&lat=${lat}&lon=${long}`
     )
-    .then(
-        data => {
-            const busStops: BusStop[] = data.data.stopPoints;
-            return busStops;
-        }
-    )
+    const busStops: BusStop[] = data.data.stopPoints;
+    return busStops;
 }
 
 export function closest2Stops(busStops: BusStop[]) : BusStop[] {

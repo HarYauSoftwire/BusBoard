@@ -10,7 +10,12 @@ export function sortBusArrivals(busArrivals: TfLBusArrival[]) : TfLBusArrival[] 
     ).slice(0, 5);
 }
 
-export function formatBusArrival(busArrival: TfLBusArrival) : string {
+function formatBusArrival(busArrival: TfLBusArrival) : string {
     return `Bus #${busArrival.lineName} to ${busArrival.destinationName}` +
      ` arriving in ${Math.round(busArrival.timeToStation / 60)} mins`;
+}
+
+export function formatBusArrivals(busArrivals: TfLBusArrival[], stopName: string) : string {
+    return stopName + '\n' +
+        busArrivals.map(formatBusArrival).join('\n');
 }

@@ -6,13 +6,8 @@ export type PostcodeInfo = {
     latitude: number;
 }
 
-export function getPostcodeData(postcode: string) {
-   return axios.get(`https://api.postcodes.io/postcodes?q=${postcode}`)
-    .then(
-        response => {
-            const postcodeData: PostcodeInfo[] = response.data.result;
-            return postcodeData[0];
-        }
-    )
-
+export async function getPostcodeData(postcode: string) : Promise<PostcodeInfo> {
+    const response = await axios.get(`https://api.postcodes.io/postcodes?q=${postcode}`);
+    const postcodeData: PostcodeInfo[] = response.data.result;
+    return postcodeData[0];
 }
