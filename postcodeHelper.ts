@@ -7,7 +7,12 @@ export type PostcodeInfo = {
 }
 
 export async function getPostcodeData(postcode: string) : Promise<PostcodeInfo> {
-    const response = await axios.get(`https://api.postcodes.io/postcodes?q=${postcode}`);
-    const postcodeData: PostcodeInfo[] = response.data.result;
-    return postcodeData[0];
+    try {
+        const response = await axios.get(`https://api.postcodes.io/postcodes?q=${postcode}`);
+        const postcodeData: PostcodeInfo[] = response.data.result;
+        return postcodeData[0];
+    }
+    catch (error) {
+        throw new Error("Failed to get postcode data");
+    }
 }

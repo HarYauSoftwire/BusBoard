@@ -10,16 +10,21 @@ const rl = readline.createInterface({
 });
 
 rl.question("Please input a postcode...\n", async answer => {
-    const postcodeInfo: PostcodeInfo = await getPostcodeData(answer);
-    const busStops: BusStop[] = await getNearbyStops(postcodeInfo.latitude,postcodeInfo.longitude);
-    const closestStops: BusStop[] = closest2Stops(busStops);
-    const busStopInfos: string[] = await Promise.all(
-        closestStops.map(async busStop =>
-            formatBusArrivals(
-                await requestBusArrivals(busStop.naptanId),
-                `${busStop.commonName} ${busStop.stopLetter || ""}`
-            )
-        ));
-    console.log(busStopInfos.join('\n\n'));
+    try {
+        const postcodeInfo: PostcodeInfo = await getPostcodeData(answer);
+        const busStops: BusStop[] = await getNearbyStops(postcodeInfo.latitude,postcodeInfo.longitude);
+        const closestStops: BusStop[] = closest2Stops(busStops);
+        const busStopInfos: string[] = await Promise.all(
+            closestStops.map(async busStop =>
+                formatBusArrivals(
+                    await requestBusArrivals(busStop.naptanId),
+                    `${busStop.commonName} ${busStop.stopLetter || ""}`
+                )
+            ));
+        console.log(busStopInfos.join('\n\n'));
+    }
+    catch (error) {
+        console.log("Error!: " + error.message);
+    }
     rl.close();
 })
