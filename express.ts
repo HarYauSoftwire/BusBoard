@@ -27,3 +27,4 @@ app.listen(port, () => {
 });
 
 app.use('/frontend', express.static('frontend'));
+app.use('/history', express.static('frontend/history.html'));
