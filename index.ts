@@ -1,6 +1,6 @@
 import readline from "readline";
 import { formatBusArrivals } from "./TflBusArrivalHelper";
-import processPostcode from "./processPostcode";
+import getBusStopArrivalsNearPostcode from "./getBusStopArrivalsNearPostcode";
 import { BusStopArrivals } from "./BusStopHelper";
 import { logger } from "./logHelper";
 
@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 
 rl.question("Please input a postcode...\n", async answer => {
     try {
-        const busStopArrivals: BusStopArrivals[] = await processPostcode(answer);
+        const busStopArrivals: BusStopArrivals[] = await getBusStopArrivalsNearPostcode(answer);
         console.log(busStopArrivals.map(formatBusArrivals).join('\n\n'));
     }
     catch (error) {

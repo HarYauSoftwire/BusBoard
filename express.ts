@@ -1,6 +1,6 @@
 import express from 'express';
 import { logger } from './logHelper';
-import processPostcode from "./processPostcode";
+import getBusStopArrivalsNearPostcode from "./getBusStopArrivalsNearPostcode";
 const app = express();
 const port: number = 3000;
 
@@ -13,16 +13,17 @@ app.get('/departureBoards', async (req, res) => {
     }
     else {
         try {
-            res.send(await processPostcode(String(postcode)));
+            res.send(await getBusStopArrivalsNearPostcode(String(postcode)));
         }
         catch (error) {
             logger.error(error.message);
-            res.status(500).send("Error 500: " + error.message);
+            res.status(500).send(error.message);
         }
     }
-    // res.send('Hello world!');
 });
 
 app.listen(port, () => {
     logger.info(`Listening at http://localhost/:${port}`);
 });
+
+app.use('/frontend', express.static('frontend'));
