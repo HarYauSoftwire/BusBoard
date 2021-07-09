@@ -1,11 +1,5 @@
 import axios from "axios"
-
-export type BusStop = {
-    commonName: string;
-    naptanId: string;
-    stopLetter: string;
-    distance: number;
-}
+import { BusStop } from "./BusStopHelper";
 
 export async function getNearbyStops (lat: number,long: number) {
     const data = await axios.get<{stopPoints: BusStop[]}>(

@@ -1,3 +1,5 @@
+import { BusStopArrivals } from "./BusStopHelper";
+
 export type TfLBusArrival = {
     lineName: string;
     destinationName: string;
@@ -15,7 +17,16 @@ function formatBusArrival(busArrival: TfLBusArrival) : string {
      ` arriving in ${Math.round(busArrival.timeToStation / 60)} mins`;
 }
 
-export function formatBusArrivals(busArrivals: TfLBusArrival[], stopName: string) : string {
-    return stopName + '\n' +
-        busArrivals.map(formatBusArrival).join('\n');
+export function formatBusArrivals(busStopArrivals: BusStopArrivals) : string {
+    return busStopArrivals.busStop.commonName + ' ' +
+        busStopArrivals.busStop.stopLetter + '\n' +
+        busStopArrivals.arrivals.map(formatBusArrival).join('\n');
+}
+
+export function filterTflBusArrival(bigArrival: TfLBusArrival) : TfLBusArrival {
+    return {
+        lineName: bigArrival.lineName,
+        destinationName: bigArrival.destinationName,
+        timeToStation: bigArrival.timeToStation
+    }
 }
