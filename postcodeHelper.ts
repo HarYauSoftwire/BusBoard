@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logger } from "./logHelper";
 
 export type PostcodeInfo = {
     postcode: string;
@@ -8,6 +9,7 @@ export type PostcodeInfo = {
 
 export async function getPostcodeData(postcode: string) : Promise<PostcodeInfo> {
     try {
+        logger.info(`Requesting postcode data for ${postcode}`);
         const response = await axios.get(`https://api.postcodes.io/postcodes?q=${postcode}`);
         const postcodeData: PostcodeInfo[] = response.data.result;
         return postcodeData[0];
