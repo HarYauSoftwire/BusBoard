@@ -3,7 +3,7 @@ import processPostcode from "./processPostcode";
 const app = express();
 const port: number = 3000;
 
-app.get('/', async (req, res) => {
+app.get('/departureBoards', async (req, res) => {
     const postcode = req.query['postcode'];
     if (!postcode) {
         res.send('No postcode specified!');
@@ -13,12 +13,12 @@ app.get('/', async (req, res) => {
             res.send(await processPostcode(String(postcode)));
         }
         catch (error) {
-            res.send(error.message);
+            res.status(500).send("Error 500: " + error.message);
         }
     }
     // res.send('Hello world!');
 });
 
 app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}`);
+    console.log(`Listening at http://localhost/:${port}`);
 });
